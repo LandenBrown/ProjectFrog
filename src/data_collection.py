@@ -142,7 +142,7 @@ def create_an_initial_predator(int_atts, ext_atts):
     randomLifespan = random.randint(min_lifespan_days, max_lifespan_days)
 
     #Creat new frog and return it
-    newPredator = Predator(randomName, "Walk", RandomExtAtt, RandomIntAtt, "Bite", randomLifespan)
+    newPredator = Predator(randomName, "Walk", RandomExtAtt, RandomIntAtt, "Bite", randomLifespan, 0, False)
     return newPredator
     
 #predator1 = create_an_initial_predator(predator_int_atts, predator_ext_atts)
@@ -151,3 +151,25 @@ def create_an_initial_predator(int_atts, ext_atts):
 #Biomes
 
 standardJungle = Biome("Standard", "Tropical", "Rainforest", "Normal", "Picked", "Consistent", "Standard")
+
+
+#Here we must figure out how we are going to handle the giant list of frogs that is going to spawn
+#For now we will store them in a list and track the name of the frog based on the below logic
+##################   NEED TO READ ON DICTIONARIES AS I KNOW ITS GONNA BE THE BEST WAY FORWARD BUT I DONT WANT TO DO IT.
+lastFrogNumber = 0
+newFrogName = "frog"
+
+#production frog creation... 
+#update the lastFrogNumber for tracking
+def update_lastFrogNumber():
+    global lastFrogNumber
+    lastFrogNumber += 1
+    completeFrogName = newFrogName+str(lastFrogNumber)
+    print(completeFrogName)
+
+
+update_lastFrogNumber()
+update_lastFrogNumber()
+update_lastFrogNumber()
+
+####Testing object creation

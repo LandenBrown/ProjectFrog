@@ -222,7 +222,12 @@ WorldAgeInDays = 0
 #Test list iteration as well as find food chance + death
 # all(x.is_dead!=True for x in frog_dict.values())
 x = 2
+
+
+#### START ENGINE WHILE LOOP ####
 while x != 1:
+    #how many frogs are going to be born at the end of the iteration:
+    frogs_to_be_born = 0
     if x == 3:
         print("No simulation.")
         break
@@ -234,21 +239,8 @@ while x != 1:
             #Instead of find food, each frog needs to have a RunDailySimulation function that incorporates everything 
             frog.findFood(standardJungle)
             if frog.checkMating():
-                #Get list of frogs that are currently alive
-                frogsCurrentlyAlive = [v for k,v in frog_dict.items() if v.is_dead == False] 
-                #get length of that list minus 1 for list calculation   
-                numberOfFrogsCurrentlyAlive = (len(frogsCurrentlyAlive) - 1)
-                #pick a random frog in that list
-                randomAliveFrog = random.randint(0, numberOfFrogsCurrentlyAlive)
-                #Mate with this frog and add to dictionary
-                frog.Mate(frogsCurrentlyAlive[randomAliveFrog], create_an_initial_frog)
-                #how the fuck do i add this frog to the dictionary
-                frog_dict[update_lastFrogNumber()] = frog.Mate(frogsCurrentlyAlive[randomAliveFrog], create_an_initial_frog)
-                print("############################### A NEW FROG HAS BEEN BORN")
-                #time.sleep(2)
-                print(len(frog_dict))
-                #time.sleep(2)
-                break
+                frogs_to_be_born += 1
+                
                 
 
 
@@ -261,6 +253,39 @@ while x != 1:
     #if all(x.is_dead==True for x in frog_dict.values()):
         #print("THE LAST FROG JUST DIED. EXITING")
         #break
+    
+
+    #####################################  PROCESS BORN FROGS INTO MAIN DICTIONARY HERE  #####################################
+    #### START NESTED FOR LOOP ####
+    for i in range(1, (frogs_to_be_born+1)):
+        print("Starting birthing process for a new frog...")
+        #Get list of frogs that are currently alive
+        frogsCurrentlyAlive = [v for k,v in frog_dict.items() if v.is_dead == False] 
+        #get length of that list minus 1 for list calculation   
+        numberOfFrogsCurrentlyAlive = (len(frogsCurrentlyAlive) - 1)
+        #pick a random frog in that list
+        randomAliveFrog = random.randint(0, numberOfFrogsCurrentlyAlive)
+        #Mate with this frog and add to dictionary
+        #What needs to be done - PROCESS FROG BIRTHS AT THE END OF ITERATION. 
+        #INCREMENT FROGS_TO_BE_BORN BY 1 EVERY TIME THERE SHOULD BE A FROG BORN. ADD THEM ALL AT THE END OF THE ITERATION TO AVOID DICTIONARY RE-ITERATION ERRORS
+        frog.Mate(frogsCurrentlyAlive[randomAliveFrog], create_an_initial_frog)
+        #how the fuck do i add this frog to the dictionary
+        frog_dict[update_lastFrogNumber()] = frog.Mate(frogsCurrentlyAlive[randomAliveFrog], create_an_initial_frog)
+        print("############################### A NEW FROG HAS BEEN BORN")
+        #time.sleep(2)
+        print(len(frog_dict))
+        #time.sleep(2)
+    #### END NESTED FOR LOOP ####
+    #print how many frogs were born that iteration
+    print(frogs_to_be_born, "frogs were born this iteration")
+    #Get number of currently alive frogs
+    frogsCurrentlyAlive = len([v for k,v in frog_dict.items() if v.is_dead == False])
+    print("there are now " + str(frogsCurrentlyAlive) + " alive frogs")
+    time.sleep(.3)
+    #clean frogs_to_be_born
+    frogs_to_be_born = 0
+
+#### END WHILE LOOP ####
 
 print("All frogs died on day", str(WorldAgeInDays))
 print("A total of " + str(len(frog_dict)) + " frogs lived on your planet")

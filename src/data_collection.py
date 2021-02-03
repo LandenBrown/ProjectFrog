@@ -180,6 +180,17 @@ def update_lastFrogNumber():
     completeFrogName = newFrogName+str(lastFrogNumber)
     return completeFrogName
 
+lastPredatorNumber = 0
+newPredatorName = "predator"
+ 
+ #production frog creation... 
+#update the lastFrogNumber for tracking
+def update_lastPredatorNumber():
+    global lastPredatorNumber
+    lastPredatorNumber += 1
+    completePredatorName = newPredatorName+str(lastPredatorNumber)
+    return completePredatorName
+
 ####Testing object creation
 
 
@@ -233,6 +244,8 @@ while x != 1:
         break
     WorldAgeInDays+=1
     print("It is now day ", str(WorldAgeInDays))
+
+#FROG MOVEMENT
     for frog in frog_dict.values():
         #Let the frog look for food.
         if frog.is_dead == False:
@@ -240,7 +253,10 @@ while x != 1:
             frog.findFood(standardJungle)
             if frog.checkMating():
                 frogs_to_be_born += 1
-                
+
+#PREDATOR MOVEMENT
+
+    
                 
 
 
